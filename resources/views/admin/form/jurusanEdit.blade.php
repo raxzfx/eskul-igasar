@@ -96,14 +96,15 @@
             @endif
             
                 <div class="card-body">
-                    <form class="needs-validation" action="{{route('jurusanStore')}}" method="POST" novalidate>
+                    <form class="needs-validation" action="{{route('jurusanUpdate',$jurusan->id_jurusan)}}" method="POST" novalidate>
                         @csrf
+                        @method('PUT')
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="name">Nama jurusan</label>
                             <div class="col-sm-10">
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"><i class="bx bx-building"></i></span>
-                                    <input type="text" class="form-control" id="name" name="nama_jurusan" placeholder="masukan nama jurusan...." required />
+                                    <input type="text" class="form-control" id="name" name="nama_jurusan" value="{{$jurusan->nama_jurusan}}" placeholder="masukan nama jurusan...." required />
                                     <div class="invalid-feedback">Nama jurusan diisi.</div>
                                 </div>
                             </div>
