@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('pembina')->references('id_guru')->on('guru')->onDelete('cascade');
             $table->time('jam_mulai');
             $table->time('jam_selesai');
-            $table->string('tempat');
+            $table->text('tempat');
             $table->string('gambar')->nullable();
             $table->timestamps();
         });

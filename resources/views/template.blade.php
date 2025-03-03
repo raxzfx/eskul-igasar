@@ -103,7 +103,7 @@
           </a>
         </li>
         <li class="menu-item">
-          <a href="ui-buttons.html" class="menu-link">
+          <a href="{{route('eskulTable')}}" class="menu-link">
             <div class="text-truncate" data-i18n="Buttons">ekstrakurikuler</div>
           </a>
         </li>

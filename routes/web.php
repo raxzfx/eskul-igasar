@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\dashboardController;
+use App\Http\Controllers\admin\eskulController;
 use App\Http\Controllers\admin\guruController;
 use App\Http\Controllers\admin\jurusanController;
 use App\Http\Controllers\admin\siswaController;
@@ -34,5 +35,12 @@ route::post('/guru/store',[guruController::class,'store'])->name('guruStore');
 Route::delete('/guru/{id}',[guruController::class,'destroy'])->name('guruDestroy');
 route::get('/guru/{id}/edit',[guruController::class,'edit'])->name('guruEdit');
 route::put('/guru/{id}/update',[guruController::class,'update'])->name('guruUpdate');
+//eskul
+route::get('/eskul',[eskulController::class,'index'])->name('eskulTable');
+route::get('/eskul/create',[eskulController::class,'create'])->name('eskulAdd');
+route::post('/eskul/store',[eskulController::class,'store'])->name('eskulStore');
+route::delete('/eskul/{id}',[eskulController::class,'destroy'])->name('eskulDestroy');
+route::get('/eskul/{id}/edit',[eskulController::class,'edit'])->name('eskulEdit');
+route::put('/eskul/{id}/update',[eskulController::class,'update'])->name('eskulUpdate');
 
 });
