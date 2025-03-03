@@ -1,5 +1,5 @@
 @extends('template')
-@section('title', 'add jurusan')
+@section('title', 'edit jurusan')
 @section('content')
 
 <!-- Navbar -->

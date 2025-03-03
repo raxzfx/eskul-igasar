@@ -3,17 +3,26 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jurusan;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class siswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search');
+
+       $siswa = Siswa::with('jurusan')->when($search, function ($query) use ($search) {
+    return $query->where('nama_siswa', 'like', "%$search%");
+})->paginate(10);
+
+
+        return view('admin.page.siswaTable',compact('siswa'));
     }
 
     /**
@@ -21,7 +30,8 @@ class siswaController extends Controller
      */
     public function create()
     {
-        //
+        $jurusan = Jurusan::all();
+        return view('admin.form.siswaAdd',compact('jurusan'));
     }
 
     /**
@@ -29,7 +39,40 @@ class siswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_siswa' => 'required|string',
+            'no_telp' => 'required|string|regex:/^[0-9]{10,13}$/',
+            'nama_jurusan' => 'required',
+            'tingkat_kelas' => 'required',
+            'password' => 'nullable|string|min:6',
+        ]);
+
+        $siswa = Siswa::where('no_telp', $request->no_telp)
+        ->orWhere('nama_siswa', $request->nama_siswa)
+        ->first();
+
+if ($siswa) {
+if ($siswa->no_telp === $request->no_telp) {
+  return redirect()->back()->withErrors(['error' => 'Nomor telepon sudah terdaftar']);
+}
+if ($siswa->nama_siswa === $request->nama_siswa) {
+  return redirect()->back()->withErrors(['error' => 'Nama siswa sudah terdaftar']);
+}
+}
+
+        
+
+        $password = $request->input('password') ? Hash::make($request->input('password')) : Hash::make('siswaanjing');
+
+        Siswa::create([
+            'nama_siswa' => $request->nama_siswa,
+            'no_telp' => $request->no_telp,
+            'nama_jurusan' => $request->nama_jurusan,
+            'tingkat_kelas' => $request->tingkat_kelas,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('siswaTable')->with('success','data berhasil di tambah');
     }
 
     /**
@@ -43,24 +86,55 @@ class siswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Siswa $siswa)
+    public function edit(String $id)
     {
-        //
+        $siswa = Siswa::findOrFail($id);
+        $jurusan = Jurusan::all();
+        return view('admin.form.siswaEdit',compact('siswa','jurusan'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Siswa $siswa)
+    public function update(Request $request, String $id)
     {
-        //
+        $request->validate([
+         'nama_siswa' => 'required',
+         'nama_jurusan' => 'required',
+         'no_telp' => 'required',
+         'tingkat_kelas' => 'required',
+         'password' => 'nullable|string|min:6',
+        ]);
+
+        $konflik = Siswa::where('nama_siswa',$request->nama_siswa)
+                  ->first();
+
+        if($konflik){
+        return redirect()->back()->withErrors(['error'=>'siswa sudah terdaftar']);
+        }
+        
+
+        $siswa = Siswa::findOrFail($id);
+
+        $siswa->update([
+           'nama_siswa' => $request->nama_siswa,
+           'nama_jurusan' => $request->nama_jurusan,
+           'no_telp' => $request->no_telp,
+           'tingkat_kelas' => $request->tingkat_kelas,
+           'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('siswaTable')->with('success','data berhasil terupdate');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Siswa $siswa)
+    public function destroy(String $id)
     {
-        //
+        $siswa = Siswa::findOrFail($id);
+        $siswa->delete($id);
+
+        return redirect()->route('siswaTable')->with('success','data berhasil di hapus');
     }
 }

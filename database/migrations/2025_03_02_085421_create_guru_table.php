@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('guru', function (Blueprint $table) {
             $table->id('id_guru');
             $table->string('nama_guru');
-            $table->integer('no_telp');
+            $table->string('no_telp',15);
             $table->string('password');
             $table->enum('role', ['pembina', 'kesiswaan']);
             $table->timestamps();

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('siswa', function (Blueprint $table) {
             $table->id('id_siswa');
             $table->string('nama_siswa');
-            $table->integer('no_telp');
+            $table->string('no_telp',15);
             $table->string('password');
-            $table->foreignId('jurusan')->references('id_jurusan')->on('jurusan')->onDelete('cascade');
+            $table->foreignId('nama_jurusan')->references('id_jurusan')->on('jurusan')->onDelete('cascade');
             $table->string('tingkat_kelas');
             $table->timestamps();
         });
