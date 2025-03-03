@@ -49,7 +49,7 @@
   </div>
 <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
   <!-- Search -->
-<form method="GET" action="{{ route('guruTable') }}" class="navbar-nav align-items-center me-auto">
+<form method="GET" action="{{ route('eskulTable') }}" class="navbar-nav align-items-center me-auto">
     <div class="nav-item d-flex align-items-center">
         <span class="w-px-22 h-px-22">
             <i class="icon-base bx bx-search icon-md"></i>

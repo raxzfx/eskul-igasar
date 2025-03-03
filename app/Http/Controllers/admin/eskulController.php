@@ -17,7 +17,7 @@ class eskulController extends Controller
         $search = $request->input('search');
 
         $eskul = Eskul::with('guru')->when($search, function ($query) use ($search) {
-     return $query->where('nama_siswa', 'like', "%$search%");
+     return $query->where('nama_eskul', 'like', "%$search%");
  })->paginate(10);
  
  
