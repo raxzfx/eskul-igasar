@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\dashboardController;
+use App\Http\Controllers\admin\guruController;
 use App\Http\Controllers\admin\jurusanController;
 use App\Http\Controllers\admin\siswaController;
 use Illuminate\Support\Facades\Route;
@@ -26,5 +27,12 @@ route::post('/siswa/store',[siswaController::class,'store'])->name('siswaStore')
 route::delete('/siswa/{id}',[siswaController::class,'destroy'])->name('siswaDestroy');
 route::get('/siswa/{id}/edit',[siswaController::class,'edit'])->name('siswaEdit');
 route::put('/siswa/{id}/update',[siswaController::class,'update'])->name('siswaUpdate');
+//guru
+route::get('/guru',[guruController::class,'index'])->name('guruTable');
+route::get('/guru/create',[guruController::class,'create'])->name('guruAdd');
+route::post('/guru/store',[guruController::class,'store'])->name('guruStore');
+Route::delete('/guru/{id}',[guruController::class,'destroy'])->name('guruDestroy');
+route::get('/guru/{id}/edit',[guruController::class,'edit'])->name('guruEdit');
+route::put('/guru/{id}/update',[guruController::class,'update'])->name('guruUpdate');
 
 });

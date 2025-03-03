@@ -98,7 +98,7 @@
           </a>
         </li>
         <li class="menu-item">
-          <a href="ui-badges.html" class="menu-link">
+          <a href="{{route('guruTable')}}" class="menu-link">
             <div class="text-truncate" data-i18n="Badges">guru</div>
           </a>
         </li>
