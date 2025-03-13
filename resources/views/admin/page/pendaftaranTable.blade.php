@@ -1,5 +1,5 @@
 @extends('template')
-@section('title', 'table eskul')
+@section('title', 'table pendaftaran')
 @section('content')
 
 <style>
@@ -49,7 +49,7 @@
   </div>
 <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
   <!-- Search -->
-<form method="GET" action="{{ route('eskulTable') }}" class="navbar-nav align-items-center me-auto">
+<form method="GET" action="{{ route('pendaftaranTable') }}" class="navbar-nav align-items-center me-auto">
     <div class="nav-item d-flex align-items-center">
         <span class="w-px-22 h-px-22">
             <i class="icon-base bx bx-search icon-md"></i>
@@ -118,11 +118,11 @@
 
     <!-- Hoverable Table rows -->
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h1 class="fw-bold">eskul</h1>
+        <h1 class="fw-bold">pendaftaran</h1>
         <div class="card">
             <h5 class="card-header d-flex justify-content-between align-items-center">
-                <span>eskul table</span>
-                <a href="{{route('eskulAdd')}}" class="btn btn-primary">
+                <span>pendaftaran table</span>
+                <a href="{{route('pendaftaranAdd')}}" class="btn btn-primary">
                     <span class="icon-base bx bx-plus-circle icon-sm me-2"></span>add data
                 </a>
             </h5>
@@ -131,78 +131,75 @@
                 <thead>
                   <tr>
                     <th>no</th>
-                    <th>nama eskul</th>
-                    <th>deskripsi</th>
-                    <th>hari</th>
-                    <th>pembina</th>
-                    <th>jam mulai</th>
-                    <th>jam selesai</th>
-                    <th>tempat</th>
+                    <th>nama murid</th>
+                    <th>nis</th>
+                    <th>alasan</th>
+                    <th>hobi</th>
+                    <th>tgl daftar</th>
+                    <th>eskul</th>
+                    <th>status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ( $eskul as $kul )
+                    @foreach ( $pendaftaran as $daftar )
                   <tr>
-                    <td>{{ ($eskul->currentPage() - 1) * $eskul->perPage() + $loop->iteration }}</td>
-                    <td>{{$kul->nama_eskul}}</td>
+                    <td>{{ ($pendaftaran->currentPage() - 1) * $pendaftaran->perPage() + $loop->iteration }}</td>
+                    <td>{{$daftar->nama_murid}}</td>
+                    <td>{{$daftar->nis}}</td>
+                    <td>{{$daftar->alasan}}</td>
+                    <td>{{$daftar->hobi}}</td>
+                    <td>{{$daftar->tgl_daftar}}</td>
                     <td>
-                          <!-- Button trigger modal -->
-                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter{{$kul->deskripsi}}">deskripsi</button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="modalCenter{{$kul->deskripsi  }}" tabindex="-1" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                       {{$kul->deskripsi}}
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                      @foreach($daftar->eskuls as $eskul)
+                      <span class="badge bg-primary">{{ $eskul->nama_eskul }}</span>
+                  @endforeach
                     </td>
-                    <td>{{ $kul->hari}}</td>
-                    <td>{{ $kul->guru->nama_guru}}</td>
-                    <td>{{ $kul->jam_mulai}}</td>
-                    <td>{{ $kul->jam_selesai}}</td>
                     <td>
-                        @foreach (explode(',', $kul->tempat) as $tempat)
-                        <span class="badge bg-primary">{{ trim($tempat) }}</span>
-                    @endforeach
+                      @if ($daftar->status == 'pending')
+                      <div class="badge bg-label-warning"> {{$daftar->status}}</div>
+                      @elseif ($daftar->status == 'approve')
+                      <div class="badge bg-label-success"> {{$daftar->status}}</div>
+                      @elseif ($daftar->status == 'reject')
+                      <div class="badge bg-label-danger"> {{$daftar->status}}</div>
+                      @endif
+                   
                     </td>
                     <td>
                       <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="{{route('eskulEdit', $kul->id_eskul)}}">
-                              <i class="icon-base bx bx-edit-alt me-1"></i> Edit
-                          </a>
-                          <form action="{{ route('eskulDestroy', $kul->id_eskul ) }}" method="POST" class="d-inline delete-form">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="dropdown-item delete-btn">
-                                <i class="icon-base bx bx-trash me-1"></i> Delete
-                            </button>
-                        </form>
-                        </div>
+                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                              <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                          </button>
+                          <div class="dropdown-menu">
+                              <!-- Form untuk Approve -->
+                              <form action="{{ route('pendaftaranUpdateStatus', $daftar->id_pendaftaran) }}" method="POST">
+                                  @csrf
+                                  @method('PATCH')
+                                  <input type="hidden" name="status" value="approve">
+                                  <button type="submit" class="dropdown-item">
+                                      <i class="icon-base bx bx-check-circle me-1"></i> Approve
+                                  </button>
+                              </form>
+                  
+                              <!-- Form untuk Reject -->
+                              <form action="{{ route('pendaftaranUpdateStatus', $daftar->id_pendaftaran) }}" method="POST">
+                                  @csrf
+                                  @method('PATCH')
+                                  <input type="hidden" name="status" value="reject">
+                                  <button type="submit" class="dropdown-item">
+                                      <i class="icon-base bx bx-x-circle me-1"></i> Reject
+                                  </button>
+                              </form>
+                          </div>
                       </div>
-                    </td>
+                  </td>
+                  
                   </tr>
                   @endforeach
                 </tbody>
               </table>
               <div class="mx-4 mt-3">
-                   {{ $eskul->links() }}
+                   {{ $pendaftaran->links() }}
               </div>
             </div>
         </div>

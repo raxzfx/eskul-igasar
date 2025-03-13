@@ -1,14 +1,16 @@
 <?php
 
+use App\Http\Controllers\admin\absensiController;
 use App\Http\Controllers\admin\dashboardController;
 use App\Http\Controllers\admin\eskulController;
 use App\Http\Controllers\admin\guruController;
 use App\Http\Controllers\admin\jurusanController;
 use App\Http\Controllers\admin\siswaController;
+use App\Http\Controllers\admin\pendaftaranController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('register');
+    return view('login');
 });
 
 route::prefix('admin')->group(function(){
@@ -42,5 +44,15 @@ route::post('/eskul/store',[eskulController::class,'store'])->name('eskulStore')
 route::delete('/eskul/{id}',[eskulController::class,'destroy'])->name('eskulDestroy');
 route::get('/eskul/{id}/edit',[eskulController::class,'edit'])->name('eskulEdit');
 route::put('/eskul/{id}/update',[eskulController::class,'update'])->name('eskulUpdate');
+//pendaftaran
+route::get('/pendaftaran',[pendaftaranController::class,'index'])->name('pendaftaranTable');
+route::get('/pendaftaran/create',[pendaftaranController::class,'create'])->name('pendaftaranAdd');
+route::post('/pendaftaran/store',[pendaftaranController::class,'store'])->name('pendaftaranStore');
+Route::patch('/pendaftaran/{id}/status', [PendaftaranController::class, 'updateStatus'])->name('pendaftaranUpdateStatus');
+//absensi
+route::get('/absensi',[absensiController::class,'index'])->name('absensiTable');
+route::get('/absensi/create',[absensiController::class,'create'])->name('absensiAdd');
+route::post('/absensi/store',[absensiController::class,'store'])->name('absensiStore');
+
 
 });

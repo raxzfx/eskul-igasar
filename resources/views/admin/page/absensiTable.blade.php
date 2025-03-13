@@ -1,5 +1,5 @@
 @extends('template')
-@section('title', 'table eskul')
+@section('title', 'table absensi')
 @section('content')
 
 <style>
@@ -49,7 +49,7 @@
   </div>
 <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
   <!-- Search -->
-<form method="GET" action="{{ route('eskulTable') }}" class="navbar-nav align-items-center me-auto">
+<form method="GET" action="{{ route('jurusanTable') }}" class="navbar-nav align-items-center me-auto">
     <div class="nav-item d-flex align-items-center">
         <span class="w-px-22 h-px-22">
             <i class="icon-base bx bx-search icon-md"></i>
@@ -118,11 +118,11 @@
 
     <!-- Hoverable Table rows -->
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h1 class="fw-bold">eskul</h1>
+        <h1 class="fw-bold">absensi</h1>
         <div class="card">
             <h5 class="card-header d-flex justify-content-between align-items-center">
-                <span>eskul table</span>
-                <a href="{{route('eskulAdd')}}" class="btn btn-primary">
+                <span>absensi table</span>
+                <a href="{{route('jurusanAdd')}}" class="btn btn-primary">
                     <span class="icon-base bx bx-plus-circle icon-sm me-2"></span>add data
                 </a>
             </h5>
@@ -131,63 +131,26 @@
                 <thead>
                   <tr>
                     <th>no</th>
-                    <th>nama eskul</th>
-                    <th>deskripsi</th>
-                    <th>hari</th>
-                    <th>pembina</th>
-                    <th>jam mulai</th>
-                    <th>jam selesai</th>
-                    <th>tempat</th>
+                    <th>nama murid</th>
+                    <th>status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
-                <tbody class="table-border-bottom-0">
-                    @foreach ( $eskul as $kul )
+                {{-- <tbody class="table-border-bottom-0">
+                    @foreach ( $absensi as $jurus )
                   <tr>
-                    <td>{{ ($eskul->currentPage() - 1) * $eskul->perPage() + $loop->iteration }}</td>
-                    <td>{{$kul->nama_eskul}}</td>
-                    <td>
-                          <!-- Button trigger modal -->
-                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter{{$kul->deskripsi}}">deskripsi</button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="modalCenter{{$kul->deskripsi  }}" tabindex="-1" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                       {{$kul->deskripsi}}
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                    </td>
-                    <td>{{ $kul->hari}}</td>
-                    <td>{{ $kul->guru->nama_guru}}</td>
-                    <td>{{ $kul->jam_mulai}}</td>
-                    <td>{{ $kul->jam_selesai}}</td>
-                    <td>
-                        @foreach (explode(',', $kul->tempat) as $tempat)
-                        <span class="badge bg-primary">{{ trim($tempat) }}</span>
-                    @endforeach
-                    </td>
+                    <td>{{ ($jurusan->currentPage() - 1) * $jurusan->perPage() + $loop->iteration }}</td>
+                    <td>{{$jurus->nama_jurusan}}</td>
                     <td>
                       <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                             <i class="icon-base bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="{{route('eskulEdit', $kul->id_eskul)}}">
+                          <a class="dropdown-item" href="{{route('jurusanEdit', $jurus->id_jurusan)}}">
                               <i class="icon-base bx bx-edit-alt me-1"></i> Edit
                           </a>
-                          <form action="{{ route('eskulDestroy', $kul->id_eskul ) }}" method="POST" class="d-inline delete-form">
+                          <form action="{{ route('jurusanDelete', $jurus->id_jurusan ) }}" method="POST" class="d-inline delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="dropdown-item delete-btn">
@@ -199,10 +162,10 @@
                     </td>
                   </tr>
                   @endforeach
-                </tbody>
+                </tbody> --}}
               </table>
               <div class="mx-4 mt-3">
-                   {{ $eskul->links() }}
+                   {{-- {{ $jurusan->links() }} --}}
               </div>
             </div>
         </div>

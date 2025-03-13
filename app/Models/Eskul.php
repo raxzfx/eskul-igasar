@@ -13,4 +13,11 @@ class Eskul extends Model
     public function guru(){
         return $this->belongsTo(Guru::class,'pembina','id_guru');
     }
+
+    public function pendaftarans()
+    {
+        return $this->belongsToMany(Pendaftaran::class, 'pendaftaran_eskul', 'eskul_id', 'pendaftaran_id')
+                    ->withPivot('status')
+                    ->withTimestamps();
+    }
 }
