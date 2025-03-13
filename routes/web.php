@@ -10,7 +10,7 @@ use App\Http\Controllers\admin\pendaftaranController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('login');
+    return view('user.index');
 });
 
 route::prefix('admin')->group(function(){
