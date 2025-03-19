@@ -18,5 +18,9 @@ class Pendaftaran extends Model
                     ->withPivot('status')
                     ->withTimestamps();
     }
+
+    public function absen(){
+        return $this->hasMany(Absensi::class, 'pendaftaran_id', 'id_pendaftaran');
+    }
 }
 

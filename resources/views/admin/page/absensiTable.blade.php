@@ -119,56 +119,59 @@
     <!-- Hoverable Table rows -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <h1 class="fw-bold">absensi</h1>
-        <div class="card">
+        <form action="{{ route('absensiTable') }}" method="GET" class="d-flex gap-2 mb-3 " style="max-width: 130px;">
+          <input type="date" name="tanggal" class="form-control" value="{{ request('tanggal') }}">
+          <button type="submit" class="btn btn-primary">Filter</button>
+      </form>
+      
+        @foreach ($eskuls as $eskul)
+        <div class="card mb-4">
             <h5 class="card-header d-flex justify-content-between align-items-center">
-                <span>absensi table</span>
-                <a href="{{route('jurusanAdd')}}" class="btn btn-primary">
-                    <span class="icon-base bx bx-plus-circle icon-sm me-2"></span>add data
-                </a>
+                <span>Absensi - {{ $eskul->nama_eskul }}</span>
+                <a href="{{ route('absensiAdd', ['eskul_id' => $eskul->id_eskul]) }}" class="btn btn-primary">
+                  <span class="icon-base bx bx-plus-circle icon-sm me-2"></span> Tambah Data
+              </a>
+              
             </h5>
             <div class="table-responsive text-nowrap">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>no</th>
-                    <th>nama murid</th>
-                    <th>status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                {{-- <tbody class="table-border-bottom-0">
-                    @foreach ( $absensi as $jurus )
-                  <tr>
-                    <td>{{ ($jurusan->currentPage() - 1) * $jurusan->perPage() + $loop->iteration }}</td>
-                    <td>{{$jurus->nama_jurusan}}</td>
-                    <td>
-                      <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="{{route('jurusanEdit', $jurus->id_jurusan)}}">
-                              <i class="icon-base bx bx-edit-alt me-1"></i> Edit
-                          </a>
-                          <form action="{{ route('jurusanDelete', $jurus->id_jurusan ) }}" method="POST" class="d-inline delete-form">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="dropdown-item delete-btn">
-                                <i class="icon-base bx bx-trash me-1"></i> Delete
-                            </button>
-                        </form>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody> --}}
-              </table>
-              <div class="mx-4 mt-3">
-                   {{-- {{ $jurusan->links() }} --}}
-              </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Murid</th>
+                            <th>Tanggal</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @forelse ($absensiPerEskul[$eskul->id_eskul] as $index => $absen)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $absen->namaMurid->nama_murid }}</td>
+                                <td>{{ $absen->created_at->format('d-m-Y') }}</td>
+                                <td>
+                                    <span class="badge bg-{{ $absen->status == 'hadir' ? 'success' : 
+                                        ($absen->status == 'sakit' ? 'warning' : 
+                                        ($absen->status == 'izin' ? 'primary' : 'danger')) }}">
+                                        {{ $absen->status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">Tidak ada data absensi.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination untuk setiap eskul -->
+            <div class="d-flex justify-content-center mt-3">
+                {{ $absensiPerEskul[$eskul->id_eskul]->appends(request()->query())->links() }}
             </div>
         </div>
+    @endforeach
+</div>
         
     </div>
 

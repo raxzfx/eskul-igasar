@@ -20,4 +20,8 @@ class Eskul extends Model
                     ->withPivot('status')
                     ->withTimestamps();
     }
+
+    public function absensi(){
+        return $this->hasMany(Absensi::class, 'eskul_id', 'id_eskul');
+    }
 }

@@ -8,6 +8,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
       <title>@yield('title')</title>
+
+      <!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+
       <!-- Canonical SEO -->
         <meta name="description" content="Sneat Free is the best bootstrap 5 dashboard for responsive web apps. Streamline your app development process with ease." />
         <meta name="keywords" content="Sneat free dashboard, Sneat free bootstrap dashboard, free admin, free theme, open source, free, MIT license" />
@@ -53,6 +59,8 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
       <script src="{{asset ('assets/js/config.js')}}"></script>
+      
+
   </head>
   <body>
       <!-- ?PROD Only: Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
@@ -193,9 +201,23 @@
       <script src="{{asset ('assets/js/main.js')}}"></script>
     <!-- Page JS -->
     <script src="{{asset ('assets/js/dashboards-analytics.js')}}"></script>
+
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
       <!-- Place this tag before closing body tag for github widget button. -->
       <script async defer src="https://buttons.github.io/buttons.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+      <!-- Inisialisasi Select2 -->
+<script>
+  $(document).ready(function() {
+      $('#murid').select2({
+          placeholder: "Pilih murid",
+          allowClear: true,
+          widht : '100%'
+      });
+  });
+</script>
   </body>
 </html>

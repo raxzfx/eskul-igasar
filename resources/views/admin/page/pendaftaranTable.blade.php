@@ -126,8 +126,9 @@
                     <span class="icon-base bx bx-plus-circle icon-sm me-2"></span>add data
                 </a>
             </h5>
+            @foreach ($eskuls as $eskul)
             <div class="table-responsive text-nowrap">
-                @foreach ($eskuls as $eskul)
+              
                 <h4 class="mt-4 ms-5">{{ $eskul->nama_eskul }}</h4>
                 <table class="table table-hover mb-5 ">
                     <thead>

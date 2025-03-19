@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('absensi', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('eskul_id')->references('id_eskul')->on('eskul')->onDelete('cascade');
             $table->foreignId('pendaftaran_id')->references('id_pendaftaran')->on('pendaftaran')->onDelete('cascade');
             $table->enum('status',['hadir','sakit','izin','alpha','tidak_hadir'])->default('tidak_hadir');
             $table->timestamps();

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\admin\absensiController;
+use App\Http\Controllers\admin\AbsenController;
 use App\Http\Controllers\admin\dashboardController;
 use App\Http\Controllers\admin\eskulController;
 use App\Http\Controllers\admin\guruController;
@@ -54,9 +54,11 @@ route::get('/pendaftaran/create',[pendaftaranController::class,'create'])->name(
 route::post('/pendaftaran/store',[pendaftaranController::class,'store'])->name('pendaftaranStore');
 Route::patch('/pendaftaran/{id}/eskul/{eskulId}', [PendaftaranController::class, 'updateStatus'])->name('pendaftaranUpdateStatus');
 //absensi
-route::get('/absensi',[absensiController::class,'index'])->name('absensiTable');
-route::get('/absensi/create',[absensiController::class,'create'])->name('absensiAdd');
-route::post('/absensi/store',[absensiController::class,'store'])->name('absensiStore');
+route::get('/absensi',[AbsenController::class,'index'])->name('absensiTable');
+route::get('/absensi/create',[AbsenController::class,'create'])->name('absensiAdd');
+route::post('/absensi/store',[AbsenController::class,'store'])->name('absensiStore');
+
+
 
 
 });
