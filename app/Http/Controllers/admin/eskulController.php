@@ -61,6 +61,8 @@ class eskulController extends Controller
         $gambarPath = 'uploads/' . $filename;
     }
 
+    $validate['gambar'] = $gambarPath;
+
     $jamMulai = $request->jam_mulai;
     $jamSelesai = $request->jam_selesai;
     $hari = $request->hari;
@@ -93,7 +95,7 @@ class eskulController extends Controller
     // Simpan ke database
     Eskul::create($validate);
 
-    return redirect()->route('eskulTable')->with('success', 'Data berhasil ditambahkan');
+    return redirect()->route('eskulTable')->with('success', 'Data kegiatan eskul berhasil ditambahkan');
     }
 
     /**
@@ -126,10 +128,27 @@ class eskulController extends Controller
         'hari' => 'required',
         'jam_mulai' => 'required',
         'jam_selesai' => 'required',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
     ]);
 
     // Cari data eskul yang akan diupdate berdasarkan id
     $eskul = Eskul::findOrFail($id);
+
+     // Cek apakah ada gambar baru yang diunggah
+     if ($request->hasFile('gambar')) {
+        // Hapus gambar lama jika ada
+        if ($eskul->gambar && file_exists(public_path($eskul->gambar))) {
+            unlink(public_path($eskul->gambar));
+        }
+
+        // Simpan gambar baru ke folder uploads
+        $file = $request->file('gambar');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('uploads'), $filename);
+
+        // Simpan path baru ke database
+        $eskul->gambar = 'uploads/' . $filename;
+    }
 
     // Update data eskul
     $eskul->nama_eskul = $request->nama_eskul;

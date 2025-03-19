@@ -116,9 +116,9 @@
                     </div>
                   </div>
                 </div>
-                <p class="mb-1">Profit</p>
-                <h4 class="card-title mb-3">$12,628</h4>
-                <small class="text-success fw-medium"><i class="icon-base bx bx-up-arrow-alt"></i> +72.80%</small>
+                <p class="mb-1">Jumlah siswa</p>
+                <h4 class="card-title mb-3">100</h4>
+                {{-- <small class="text-success fw-medium"><i class="icon-base bx bx-up-arrow-alt"></i> +72.80%</small> --}}
               </div>
             </div>
           </div>
@@ -139,9 +139,9 @@
                     </div>
                   </div>
                 </div>
-                <p class="mb-1">Sales</p>
-                <h4 class="card-title mb-3">$4,679</h4>
-                <small class="text-success fw-medium"><i class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small>
+                <p class="mb-1">Jumlah guru</p>
+                <h4 class="card-title mb-3">15</h4>
+                {{-- <small class="text-success fw-medium"><i class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
               </div>
             </div>
           </div>
@@ -168,8 +168,8 @@
                     </div>
                   </div>
                 </div>
-                <p class="mb-1">Payments</p>
-                <h4 class="card-title mb-3">$2,456</h4>
+                <p class="mb-1">jumlah kegiatan</p>
+                <h4 class="card-title mb-3">7</h4>
                 <small class="text-danger fw-medium"><i class="icon-base bx bx-down-arrow-alt"></i> -14.82%</small>
               </div>
             </div>
@@ -191,8 +191,8 @@
                     </div>
                   </div>
                 </div>
-                <p class="mb-1">Transactions</p>
-                <h4 class="card-title mb-3">$14,857</h4>
+                <p class="mb-1">pending status</p>
+                <h4 class="card-title mb-3">6</h4>
                 <small class="text-success fw-medium"><i class="icon-base bx bx-up-arrow-alt"></i> +28.14%</small>
               </div>
             </div>

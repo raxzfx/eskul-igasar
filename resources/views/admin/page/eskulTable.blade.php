@@ -138,6 +138,7 @@
                     <th>jam mulai</th>
                     <th>jam selesai</th>
                     <th>tempat</th>
+                    <th>gambar</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -179,6 +180,13 @@
                     @endforeach
                     </td>
                     <td>
+                         @if ($kul->gambar)
+                    <img src="{{ asset($kul->gambar) }}" width="100" alt="Gambar Eskul">
+                @else
+                    <p>Tidak ada gambar</p>
+                @endif
+                    </td>
+                    <td>
                       <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                             <i class="icon-base bx bx-dots-vertical-rounded"></i>
@@ -197,6 +205,7 @@
                         </div>
                       </div>
                     </td>
+                 
                   </tr>
                   @endforeach
                 </tbody>

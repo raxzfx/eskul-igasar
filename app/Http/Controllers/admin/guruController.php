@@ -43,6 +43,7 @@ class guruController extends Controller
             'nama_guru' => 'required|string',
             'no_telp' => 'required|string|regex:/^[0-9]{10,13}$/',
             'password' => 'nullable|string|min:6',
+            'username' => 'required|string',
             'role' => 'required'
         ]);
 
@@ -63,10 +64,11 @@ class guruController extends Controller
             'nama_guru' => $request->nama_guru,
             'no_telp' => $request->no_telp,
             'password' => bcrypt($request->password), 
+            'username' => $request->username,
             'role' => $request->role
         ]);
 
-        return redirect()->route('guruTable')->with('success','data berhasil di tambah');
+        return redirect()->route('guruTable')->with('success','data guru berhasil di tambah');
     }
 
     /**
@@ -95,6 +97,7 @@ class guruController extends Controller
             'nama_guru' => 'required',
             'no_telp' => 'required',
             'password' => 'nullable|string|min:6',
+            'username' => 'required',
             'role' => 'required'
         ]);
 
@@ -104,6 +107,7 @@ class guruController extends Controller
             'nama_guru' => $request->nama_guru,
             'no_telp' => $request->no_telp,
             'password' => bcrypt($request->password),
+            'username' => $request->username,
             'role' => $request->role
         ]);
 

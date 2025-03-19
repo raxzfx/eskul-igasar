@@ -7,11 +7,15 @@ use App\Http\Controllers\admin\guruController;
 use App\Http\Controllers\admin\jurusanController;
 use App\Http\Controllers\admin\siswaController;
 use App\Http\Controllers\admin\pendaftaranController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('user.index');
 });
+
+
 
 route::prefix('admin')->group(function(){
 //dashboard
@@ -48,7 +52,7 @@ route::put('/eskul/{id}/update',[eskulController::class,'update'])->name('eskulU
 route::get('/pendaftaran',[pendaftaranController::class,'index'])->name('pendaftaranTable');
 route::get('/pendaftaran/create',[pendaftaranController::class,'create'])->name('pendaftaranAdd');
 route::post('/pendaftaran/store',[pendaftaranController::class,'store'])->name('pendaftaranStore');
-Route::patch('/pendaftaran/{id}/status', [PendaftaranController::class, 'updateStatus'])->name('pendaftaranUpdateStatus');
+Route::patch('/pendaftaran/{id}/eskul/{eskulId}', [PendaftaranController::class, 'updateStatus'])->name('pendaftaranUpdateStatus');
 //absensi
 route::get('/absensi',[absensiController::class,'index'])->name('absensiTable');
 route::get('/absensi/create',[absensiController::class,'create'])->name('absensiAdd');

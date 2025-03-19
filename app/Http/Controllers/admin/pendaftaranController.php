@@ -11,17 +11,17 @@ class PendaftaranController extends Controller
 {
 
     public function index(Request $request)
-    {
-        $search = $request->input('search');
-    
-        $pendaftaran = Pendaftaran::with('eskuls')
-            ->when($search, function ($query) use ($search) {
-                return $query->where('nama_murid', 'like', "%$search%");
-            })
-            ->paginate(10);
-    
-        return view('admin.page.pendaftaranTable', compact('pendaftaran'));
-    }
+{
+    $search = $request->input('search');
+
+    $eskuls = Eskul::with(['pendaftarans' => function($query) use ($search) {
+        $query->when($search, function ($q) use ($search) {
+            return $q->where('nama_murid', 'like', "%$search%");
+        });
+    }])->get();
+
+    return view('admin.page.pendaftaranTable', compact('eskuls', 'search'));
+}
     
 
     public function create(){
@@ -61,13 +61,12 @@ class PendaftaranController extends Controller
         return redirect()->route('pendaftaranTable')->with('success','data berhasil di tambah');
     }
 
-    public function updateStatus(Request $request, $id)
-{
-    $pendaftaran = Pendaftaran::findOrFail($id);
-    $pendaftaran->status = $request->status; // 'approved' atau 'rejected'
-    $pendaftaran->save();
-
-    return redirect()->back()->with('success', 'Status berhasil diperbarui!');
-}
+    public function updateStatus(Request $request, $id, $eskulId)
+    {
+        $pendaftaran = Pendaftaran::findOrFail($id);
+        $pendaftaran->eskuls()->updateExistingPivot($eskulId, ['status' => $request->status]);
+    
+        return redirect()->back()->with('success', 'Status berhasil diperbarui!');
+    }
 
 }

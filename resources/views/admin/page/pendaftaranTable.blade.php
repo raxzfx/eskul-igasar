@@ -8,34 +8,34 @@
     }
     .swal2-toast {
         display: flex !important;
-        align-items: center !important; /* Sejajarkan icon dan teks */
-        background-color: #fff !important; /* Warna putih */
-        color: #333 !important; /* Warna teks gelap */
+        align-items: center !important;
+        background-color: #fff !important;
+        color: #333 !important;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1) !important;
         border-radius: 8px !important;
-        padding: 12px 18px !important; /* Tambah padding agar lebih sedang */
-        min-height: 50px !important; /* Tinggi lebih sedang */
+        padding: 12px 18px !important;
+        min-height: 50px !important;
     }
     
     .swal2-icon {
-        width: 28px !important; /* Ukuran icon lebih sedang */
+        width: 28px !important;
         height: 28px !important;
-        margin-right: 10px !important; /* Beri jarak lebih proporsional */
+        margin-right: 10px !important;
     }
 
     .swal2-title {
-        font-size: 16px !important; /* Ukuran font lebih sedang */
+        font-size: 16px !important;
         font-weight: 500 !important;
         margin: 0 !important;
         line-height: 1.4 !important;
     }
     .swal2-title-custom {
-        text-align: center !important; /* Teks di tengah */
-        font-size: 18px !important; /* Ukuran teks sama */
+        text-align: center !important;
+        font-size: 18px !important;
         font-weight: 500 !important;
     }
     .swal2-popup-custom {
-        padding: 20px !important; /* Padding lebih pas */
+        padding: 20px !important;
     }
 
 </style>
@@ -127,83 +127,74 @@
                 </a>
             </h5>
             <div class="table-responsive text-nowrap">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>no</th>
-                    <th>nama murid</th>
-                    <th>nis</th>
-                    <th>alasan</th>
-                    <th>hobi</th>
-                    <th>tgl daftar</th>
-                    <th>eskul</th>
-                    <th>status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    @foreach ( $pendaftaran as $daftar )
-                  <tr>
-                    <td>{{ ($pendaftaran->currentPage() - 1) * $pendaftaran->perPage() + $loop->iteration }}</td>
-                    <td>{{$daftar->nama_murid}}</td>
-                    <td>{{$daftar->nis}}</td>
-                    <td>{{$daftar->alasan}}</td>
-                    <td>{{$daftar->hobi}}</td>
-                    <td>{{$daftar->tgl_daftar}}</td>
-                    <td>
-                      @foreach($daftar->eskuls as $eskul)
-                      <span class="badge bg-primary">{{ $eskul->nama_eskul }}</span>
-                  @endforeach
-                    </td>
-                    <td>
-                      @if ($daftar->status == 'pending')
-                      <div class="badge bg-label-warning"> {{$daftar->status}}</div>
-                      @elseif ($daftar->status == 'approve')
-                      <div class="badge bg-label-success"> {{$daftar->status}}</div>
-                      @elseif ($daftar->status == 'reject')
-                      <div class="badge bg-label-danger"> {{$daftar->status}}</div>
-                      @endif
-                   
-                    </td>
-                    <td>
-                      <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                              <!-- Form untuk Approve -->
-                              <form action="{{ route('pendaftaranUpdateStatus', $daftar->id_pendaftaran) }}" method="POST">
-                                  @csrf
-                                  @method('PATCH')
-                                  <input type="hidden" name="status" value="approve">
-                                  <button type="submit" class="dropdown-item">
-                                      <i class="icon-base bx bx-check-circle me-1"></i> Approve
-                                  </button>
-                              </form>
-                  
-                              <!-- Form untuk Reject -->
-                              <form action="{{ route('pendaftaranUpdateStatus', $daftar->id_pendaftaran) }}" method="POST">
-                                  @csrf
-                                  @method('PATCH')
-                                  <input type="hidden" name="status" value="reject">
-                                  <button type="submit" class="dropdown-item">
-                                      <i class="icon-base bx bx-x-circle me-1"></i> Reject
-                                  </button>
-                              </form>
-                          </div>
-                      </div>
-                  </td>
-                  
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-              <div class="mx-4 mt-3">
-                   {{ $pendaftaran->links() }}
-              </div>
+                @foreach ($eskuls as $eskul)
+                <h4 class="mt-4 ms-5">{{ $eskul->nama_eskul }}</h4>
+                <table class="table table-hover mb-5 ">
+                    <thead>
+                        <tr>
+                            <th>no</th>
+                            <th>nama murid</th>
+                            <th>nis</th>
+                            <th>alasan</th>
+                            <th>hobi</th>
+                            <th>tgl daftar</th>
+                            <th>status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach ($eskul->pendaftarans as $daftar)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $daftar->nama_murid }}</td>
+                            <td>{{ $daftar->nis }}</td>
+                            <td>{{ $daftar->alasan }}</td>
+                            <td>{{ $daftar->hobi }}</td>
+                            <td>{{ $daftar->tgl_daftar }}</td>
+                            <td>
+                                @if ($daftar->pivot->status == 'pending')
+                                <div class="badge bg-label-warning"> {{ $daftar->pivot->status }}</div>
+                                @elseif ($daftar->pivot->status == 'approve')
+                                <div class="badge bg-label-success"> {{ $daftar->pivot->status }}</div>
+                                @elseif ($daftar->pivot->status == 'reject')
+                                <div class="badge bg-label-danger"> {{ $daftar->pivot->status }}</div>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <!-- Form untuk Approve -->
+                                        <form action="{{ route('pendaftaranUpdateStatus', [$daftar->id_pendaftaran, $eskul->id_eskul]) }}" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="status" value="approve">
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="icon-base bx bx-check-circle me-1"></i> Approve
+                                            </button>
+                                        </form>
+                            
+                                        <!-- Form untuk Reject -->
+                                        <form action="{{ route('pendaftaranUpdateStatus', [$daftar->id_pendaftaran, $eskul->id_eskul]) }}" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="status" value="reject">
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="icon-base bx bx-x-circle me-1"></i> Reject
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @endforeach
             </div>
         </div>
-        
     </div>
 
     <script>

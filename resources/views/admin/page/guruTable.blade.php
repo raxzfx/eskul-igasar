@@ -131,6 +131,7 @@
                 <thead>
                   <tr>
                     <th>no</th>
+                    <th>username</th>
                     <th>nama guru</th>
                     <th>no telp</th>
                     <th>role</th>
@@ -141,6 +142,7 @@
                     @foreach ( $guru as $gu )
                   <tr>
                     <td>{{ ($guru->currentPage() - 1) * $guru->perPage() + $loop->iteration }}</td>
+                    <td>{{$gu->username}}</td>
                     <td>{{$gu->nama_guru}}</td>
                     <td>{{$gu->no_telp}}</td>
                     <td>{{ $gu->role}}</td>
