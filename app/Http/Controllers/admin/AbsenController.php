@@ -12,34 +12,36 @@ class AbsenController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-        $eskuls = Eskul::all();
-        $absensiPerEskul = [];
-    
-        foreach ($eskuls as $eskul) {
-            $query = Absensi::where('eskul_id', $eskul->id_eskul);
-    
-            // Filter berdasarkan tanggal, bulan, dan tahun dari created_at
-            if ($request->filled('tanggal')) {
-                $query->whereDate('created_at', $request->tanggal);
-            }
-    
-            if ($request->filled('bulan')) {
-                $query->whereMonth('created_at', $request->bulan);
-            }
-    
-            if ($request->filled('tahun')) {
-                $query->whereYear('created_at', $request->tahun);
-            }
-    
-            // Paginate dengan nama parameter unik per eskul
-            $absensiPerEskul[$eskul->id_eskul] = $query->paginate(10, ['*'], 'page_' . $eskul->id_eskul);
-        }
-    
-        return view('admin.page.absensiTable', compact('eskuls', 'absensiPerEskul'));
+     */public function index(Request $request)
+{
+    $search = $request->input('search');
+    $eskuls = Eskul::all();
+    $absensiPerEskul = [];
+
+    foreach ($eskuls as $eskul) {
+        $query = Absensi::where('eskul_id', $eskul->id_eskul)
+            ->when($request->filled('search'), function ($q) use ($search) {
+                return $q->whereHas('namaMurid', function ($muridQuery) use ($search) {
+                    $muridQuery->where('nama_murid', 'like', "%$search%");
+                });
+            })
+            ->when($request->filled('tanggal'), function ($q) use ($request) {
+                return $q->whereDate('created_at', $request->tanggal);
+            })
+            ->when($request->filled('bulan'), function ($q) use ($request) {
+                return $q->whereMonth('created_at', $request->bulan);
+            })
+            ->when($request->filled('tahun'), function ($q) use ($request) {
+                return $q->whereYear('created_at', $request->tahun);
+            });
+
+        // Paginate dengan nama parameter unik per eskul
+        $absensiPerEskul[$eskul->id_eskul] = $query->paginate(10, ['*'], 'page_' . $eskul->id_eskul);
     }
+
+    return view('admin.page.absensiTable', compact('eskuls', 'absensiPerEskul'));
+}
+
     
 
     /**
@@ -69,6 +71,8 @@ class AbsenController extends Controller
         'eskul_id' => 'required',
         'pendaftaran_id' => 'required',
         'status' => 'required',
+        'nilai' => 'nullable|numeric',
+        'catatan' => 'nullable'
         ]);
 
           // Cek apakah siswa sudah absen di eskul yang sama pada tanggal yang sama
@@ -84,12 +88,15 @@ if ($existingAbsensi) {
         $absen = Absensi::create([
             'eskul_id' => $request->eskul_id,
             'pendaftaran_id' => $request->pendaftaran_id,
-            'status' => $request->status
+            'status' => $request->status,
+            'nilai' => $request->nilai,
+            'catatan' => $request->catatan
         ]);
 
-        return redirect()->route('absensiTable')->with('success','data absensi berhasil di tambah');
+        return redirect()->route('admin.absensi.index')->with('success','data absensi berhasil di tambah');
 
     }
+
 
     /**
      * Display the specified resource.

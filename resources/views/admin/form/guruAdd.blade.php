@@ -83,7 +83,7 @@
       @endif
 
       <div class="card-body">
-        <form class="needs-validation" action="{{ route('guruStore') }}" method="POST" novalidate>
+        <form class="needs-validation" action="{{ route('admin.guru.store') }}" method="POST" novalidate>
           @csrf
           <!-- Nama Lengkap -->
           <div class="row mb-3">

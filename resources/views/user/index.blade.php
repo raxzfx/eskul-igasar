@@ -6,6 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>homepage e-gapind</title>
+  <link rel="icon" type="image/png" href="{{asset('assets/img/logoIgasar.png')}}">
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -35,6 +36,15 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+  <style>
+    .card-img-top {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+  </style>
 </head>
 
 <body class="index-page">
@@ -44,7 +54,7 @@
 
       <a href="index.html" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <img src="{{asset('assets/img/logoIgasar.png')}}" alt="">
         <h1 class="sitename">E-Gapind</h1>
       </a>
 
@@ -52,9 +62,55 @@
         <ul>
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">About</a></li>
-          <li><a href="#call-to-action">Regist</a></li>
+          <li><a href="#extracurricular">extracurricular</a></li>
           <li><a href="#maps">Maps</a></li>
           <li><a href="#contact">Contact</a></li>
+        
+            <!-- User -->
+    @if (Auth::guard('siswa')->check())
+    <li class="nav-item navbar-dropdown dropdown-user dropdown">
+        <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
+            <div class="avatar avatar-online">
+                <img src="{{ asset('assets/img/avatars/1.png') }}" width="30px" alt class="w-px-40 h-auto rounded-circle" />
+            </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+                <a class="dropdown-item" href="#">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt width="40" class="w-px-40 h-auto rounded-circle" />
+                            </div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0 text-dark">{{ Auth::guard('siswa')->user()->username }}</h6>
+                            <small class="text-body-secondary">Siswa</small>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <div class="dropdown-divider my-1"></div>
+            </li>
+            <li>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="dropdown-item" style="border: none; background: none; cursor: pointer;">
+                        <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </li>
+@else
+    <!-- Jika belum login, tampilkan tombol login -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('login') }}">Login</a>
+    </li>
+@endif
+<!--/ User -->
+
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -78,7 +134,7 @@
             <h1>Dari Siswa, Oleh Siswa, Untuk Masa Depan Cerah! <span>egapind</span></h1>
             <p>daftar eskul mudah, hanya di egapind</p>
             <div class="d-flex">
-              <a href="#about" class="btn-get-started">Get Started</a>
+              <a href="{{route('registerForm')}}" class="btn-get-started">Regist Now</a>
               <a href="https://youtu.be/aPI9z2V76u4?si=CJKu-hTtxS9rg2Vg" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
             </div>
           </div>
@@ -162,16 +218,28 @@
     </section><!-- /About Section -->
 
     <!-- Call To Action Section -->
-    <section id="call-to-action" class="bg dark-background text-white d-flex align-items-center justify-content-center"
-    style="height: 400px; text-align: center;">
-    <div class="container"  data-aos="zoom-in" data-aos-duration="1000">
-        <h2 class="fw-bold">Daftar sekarang!</h2>
-        <p class="lead"  style="font-size: 18px;">
-            klik tombol di bawah ini untuk mendaftar eskul
-        </p>
-        <a href="#" class="btn btn-outline-light btn-lg" style="font-size: 14px; border-radius: 50px; padding: 10px 30px;">klik aku</a>
-    </div>
-</section>
+    <section id="extracurricular" class="about section dark-background">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          @foreach($eskuls as $eskul)
+          <div class="col">
+            <div class="card h-100 shadow-sm text-center">
+              @if ($eskul->gambar)
+                <img src="{{ asset($eskul->gambar) }}" class="card-img-top" alt="Gambar Eskul">
+              @else
+                <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">Tidak ada gambar</div>
+              @endif
+              <div class="card-body">
+                <h5 class="card-title">{{ $eskul->nama_eskul }}</h5>
+                <p class="card-text">{{ Str::limit($eskul->deskripsi, 100) }}</p>
+                <a href="{{ route('user.eskul.detail', $eskul->id_eskul) }}" class="btn btn-primary">Lihat Detail</a>
+              </div>
+            </div>
+          </div>
+          @endforeach
+        </div>
+      </div>
+    </section>
 <!-- end Call To Action Section -->
 
   

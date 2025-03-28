@@ -48,7 +48,7 @@ class jurusanController extends Controller
         }
         
         Jurusan::create($jurusan);
-        return redirect()->route('jurusanTable')->with('success','data berhasil di tambah');
+        return redirect()->route('admin.jurusan.index')->with('success','data berhasil di tambah');
 
     }
 
@@ -85,7 +85,7 @@ class jurusanController extends Controller
 
         $jurusan = Jurusan::findOrFail($id);
         $jurusan->update($request->all());
-        return redirect()->route('jurusanTable')->with('success','data berhasil ter update');
+        return redirect()->route('admin.jurusan.index')->with('success','data berhasil ter update');
     }
 
     /**
@@ -96,6 +96,6 @@ class jurusanController extends Controller
         $jurusan = Jurusan::findOrFail($id);
         $jurusan->delete();
 
-        return redirect()->route('jurusanTable')->with('success','data berhasil di hapus');
+        return redirect()->route('admin.jurusan.index')->with('success','data berhasil di hapus');
     }
 }

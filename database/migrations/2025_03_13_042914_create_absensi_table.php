@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('eskul_id')->references('id_eskul')->on('eskul')->onDelete('cascade');
             $table->foreignId('pendaftaran_id')->references('id_pendaftaran')->on('pendaftaran')->onDelete('cascade');
             $table->enum('status',['hadir','sakit','izin','alpha','tidak_hadir'])->default('tidak_hadir');
+            $table->integer('nilai')->nullable();
+            $table->string('catatan')->nullable();
             $table->timestamps();
         });
     }

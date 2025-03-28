@@ -45,6 +45,7 @@ class siswaController extends Controller
             'nama_jurusan' => 'required',
             'tingkat_kelas' => 'required',
             'password' => 'nullable|string|min:6',
+            'username' => 'required|string'
         ]);
 
         $siswa = Siswa::where('no_telp', $request->no_telp)
@@ -62,17 +63,18 @@ if ($siswa->nama_siswa === $request->nama_siswa) {
 
         
 
-        $password = $request->input('password') ? Hash::make($request->input('password')) : Hash::make('siswaanjing');
+        $password = $request->input('password') ? Hash::make($request->input('password')) : Hash::make('12345678');
 
         Siswa::create([
             'nama_siswa' => $request->nama_siswa,
             'no_telp' => $request->no_telp,
             'nama_jurusan' => $request->nama_jurusan,
             'tingkat_kelas' => $request->tingkat_kelas,
-            'password' => bcrypt($request->password),
+            'password' => $password,
+            'username' => $request->username
         ]);
 
-        return redirect()->route('siswaTable')->with('success','data berhasil di tambah');
+        return redirect()->route('admin.siswa.index')->with('success','data berhasil di tambah');
     }
 
     /**
@@ -104,14 +106,9 @@ if ($siswa->nama_siswa === $request->nama_siswa) {
          'no_telp' => 'required',
          'tingkat_kelas' => 'required',
          'password' => 'nullable|string|min:6',
+         'username' => 'required'
         ]);
 
-        $konflik = Siswa::where('nama_siswa',$request->nama_siswa)
-                  ->first();
-
-        if($konflik){
-        return redirect()->back()->withErrors(['error'=>'siswa sudah terdaftar']);
-        }
         
 
         $siswa = Siswa::findOrFail($id);
@@ -122,9 +119,10 @@ if ($siswa->nama_siswa === $request->nama_siswa) {
            'no_telp' => $request->no_telp,
            'tingkat_kelas' => $request->tingkat_kelas,
            'password' => bcrypt($request->password),
+           'username' => $request->username
         ]);
 
-        return redirect()->route('siswaTable')->with('success','data berhasil terupdate');
+        return redirect()->route('admin.siswa.index')->with('success','data berhasil terupdate');
     }
 
     /**
@@ -135,6 +133,6 @@ if ($siswa->nama_siswa === $request->nama_siswa) {
         $siswa = Siswa::findOrFail($id);
         $siswa->delete($id);
 
-        return redirect()->route('siswaTable')->with('success','data berhasil di hapus');
+        return redirect()->route('admin.siswa.index')->with('success','data berhasil di hapus');
     }
 }

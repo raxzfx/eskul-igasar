@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Absensi extends Model
 {
     protected $table = "absensi";
-    protected $fillable = ['pendaftaran_id','status','eskul_id'];
+    protected $fillable = ['pendaftaran_id','status','eskul_id','nilai','catatan'];
 
     public function namaMurid(){
         return $this->belongsTo(Pendaftaran::class, 'pendaftaran_id','id_pendaftaran');

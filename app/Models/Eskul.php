@@ -24,4 +24,10 @@ class Eskul extends Model
     public function absensi(){
         return $this->hasMany(Absensi::class, 'eskul_id', 'id_eskul');
     }
+
+    public function pendaftaranEskul()
+{
+    return $this->hasMany(PendaftaranEskul::class, 'eskul_id', 'id_eskul');
+}
+
 }

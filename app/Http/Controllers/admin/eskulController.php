@@ -95,16 +95,22 @@ class eskulController extends Controller
     // Simpan ke database
     Eskul::create($validate);
 
-    return redirect()->route('eskulTable')->with('success', 'Data kegiatan eskul berhasil ditambahkan');
+    return redirect()->route('admin.eskul.index')->with('success', 'Data kegiatan eskul berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $eskul = Eskul::with(['pendaftaranEskul' => function ($query) {
+            $query->where('status', 'approve');
+        }])->findOrFail($id);
+    
+        return view('user.listSiswa', compact('eskul'));
     }
+    
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -170,7 +176,7 @@ class eskulController extends Controller
     $eskul->save();
 
     // Redirect dengan pesan sukses
-    return redirect()->route('eskulTable')->with('success', 'Data Eskul berhasil diupdate');
+    return redirect()->route('admin.eskul.index')->with('success', 'Data Eskul berhasil diupdate');
     }
 
     /**
@@ -180,6 +186,6 @@ class eskulController extends Controller
     {
         $eskul = Eskul::findOrFail($id);
         $eskul->delete();
-        return redirect()->route('eskulTable')->with('success','data berhasil terhapus');
+        return redirect()->route('admin.eskul.index')->with('success','data berhasil terhapus');
     }
 }

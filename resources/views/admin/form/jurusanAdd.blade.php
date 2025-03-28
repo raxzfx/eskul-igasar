@@ -96,7 +96,7 @@
             @endif
             
                 <div class="card-body">
-                    <form class="needs-validation" action="{{route('jurusanStore')}}" method="POST" novalidate>
+                    <form class="needs-validation" action="{{route('admin.jurusan.store')}}" method="POST" novalidate>
                         @csrf
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="name">Nama jurusan</label>

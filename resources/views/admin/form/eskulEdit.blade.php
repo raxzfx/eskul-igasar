@@ -82,7 +82,7 @@
       @endif
 
       <div class="card-body">
-        <form action="{{ route('eskulUpdate', $eskul->id_eskul) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.eskul.update', $eskul->id_eskul) }}" method="POST" enctype="multipart/form-data">
           @csrf
           @method('PUT')
           

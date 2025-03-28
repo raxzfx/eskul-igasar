@@ -119,7 +119,7 @@
               @endif
               
                   <div class="card-body">
-                    <form class="needs-validation" action="{{ route('absensiStore') }}" method="POST" novalidate>
+                    <form class="needs-validation" action="{{ route('admin.absensi.store') }}" method="POST" novalidate>
                       @csrf
                   
                       <div class="row mb-3">
@@ -154,6 +154,25 @@
                               </select>
                               <div class="invalid-feedback">Silakan pilih status.</div>
                           </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="name">Nilai</label>
+                        <div class="col-sm-10">
+                          <div class="input-group has-validation">
+                            <span class="input-group-text"><i class="bx bx-user"></i></span>
+                            <input type="text" class="form-control" id="name" name="nilai" placeholder="Masukan Nilai..."  />
+                            <div class="invalid-feedback">masukan nilai terlebih dahulu</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="deskripsi">Catatan</label>
+                        <div class="col-sm-10">
+                          <textarea class="form-control" id="deskripsi" name="catatan" rows="3" placeholder="masukan catatan..." ></textarea>
+                          <div class="invalid-feedback">catatan harus diisi.</div>
+                        </div>
                       </div>
                   
                       <div class="row justify-content-end">

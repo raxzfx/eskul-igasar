@@ -14,7 +14,7 @@ class Siswa extends Authenticatable
 
     protected $table = 'siswa';
     protected $primaryKey = 'id_siswa';
-    protected $fillable = ['nama_siswa','no_telp','password','nama_jurusan','tingkat_kelas'];
+    protected $fillable = ['nama_siswa','no_telp','password','nama_jurusan','tingkat_kelas','username'];
 
 
     public function jurusan()

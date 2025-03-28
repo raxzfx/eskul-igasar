@@ -83,7 +83,7 @@
       @endif
 
       <div class="card-body">
-        <form class="needs-validation" action="{{ route('guruUpdate', $guru->id_guru) }}" method="POST" novalidate>
+        <form class="needs-validation" action="{{ route('admin.guru.update', $guru->id_guru) }}" method="POST" novalidate>
           @csrf
           @method('put')
           <!-- Nama Lengkap -->
@@ -93,6 +93,16 @@
               <div class="input-group has-validation">
                 <span class="input-group-text"><i class="bx bx-user"></i></span>
                 <input type="text" class="form-control" id="name" name="nama_guru" value="{{$guru->nama_guru}}" placeholder="Masukan nama lengkap..." required />
+                <div class="invalid-feedback">Nama lengkap harus diisi.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="name">Nama Lengkap</label>
+            <div class="col-sm-10">
+              <div class="input-group has-validation">
+                <span class="input-group-text"><i class="bx bx-user"></i></span>
+                <input type="text" class="form-control" id="name" name="username" value="{{$guru->username}}" placeholder="Masukan nama lengkap..." required />
                 <div class="invalid-feedback">Nama lengkap harus diisi.</div>
               </div>
             </div>

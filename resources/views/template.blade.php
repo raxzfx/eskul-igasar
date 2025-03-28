@@ -8,6 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
       <title>@yield('title')</title>
+      <link rel="icon" type="image/png" href="{{asset('assets/img/logoIgasar.png')}}">
 
       <!-- Select2 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -39,7 +40,7 @@
       </script>
       <!-- End Google Tag Manager -->
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{asset ('assets/img/favicon/favicon.ico')}}" />
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -84,7 +85,7 @@
   <ul class="menu-inner py-1">
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
     <li class="menu-item">
-      <a href="{{route('dashboard')}}" class="menu-link">
+      <a href="{{route('admin.dashboard')}}" class="menu-link">
         <i class="menu-icon tf-icons bx bxs-dashboard"></i>
         <div class="text-truncate" data-i18n="Basic">dashboard</div>
       </a>
@@ -96,22 +97,22 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{route('jurusanTable')}}" class="menu-link">
+          <a href="{{route('admin.jurusan.index')}}" class="menu-link">
             <div class="text-truncate" data-i18n="Accordion">jurusan</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{route('siswaTable')}}" class="menu-link">
+          <a href="{{route('admin.siswa.index')}}" class="menu-link">
             <div class="text-truncate" data-i18n="Alerts">siswa</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{route('guruTable')}}" class="menu-link">
+          <a href="{{route('admin.guru.index')}}" class="menu-link">
             <div class="text-truncate" data-i18n="Badges">guru</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{route('eskulTable')}}" class="menu-link">
+          <a href="{{route('admin.eskul.index')}}" class="menu-link">
             <div class="text-truncate" data-i18n="Buttons">ekstrakurikuler</div>
           </a>
         </li>
@@ -124,18 +125,13 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{route('pendaftaranTable')}}" class="menu-link">
+          <a href="{{route('admin.pendaftaran.index')}}" class="menu-link">
             <div class="text-truncate" data-i18n="Perfect Scrollbar">Pendaftaran</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{route('absensiTable')}}" class="menu-link">
-            <div class="text-truncate" data-i18n="Text Divider">absensi</div>
-          </a>
-        </li>
-        <li class="menu-item">
-          <a href="extended-ui-text-divider.html" class="menu-link">
-            <div class="text-truncate" data-i18n="Text Divider">pemberian nilai</div>
+          <a href="{{route('admin.absensi.index')}}" class="menu-link">
+            <div class="text-truncate" data-i18n="Text Divider">Absensi & Nilai</div>
           </a>
         </li>
       </ul>
@@ -185,9 +181,7 @@
   <div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!-- / Layout wrapper -->
-      <div class="buy-now">
-        <a href="https://themeselection.com/item/sneat-dashboard-pro-bootstrap/" target="_blank" class="btn btn-danger btn-buy-now">raxzfx</a>
-      </div>
+ 
     <!-- Core JS -->
       <script src="{{asset ('assets/vendor/libs/jquery/jquery.js')}}"></script>
     <script src="{{asset ('assets/vendor/libs/popper/popper.js')}}"></script>

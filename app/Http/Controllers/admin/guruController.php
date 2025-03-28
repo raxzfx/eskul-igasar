@@ -63,12 +63,12 @@ class guruController extends Controller
         $guru = Guru::create([
             'nama_guru' => $request->nama_guru,
             'no_telp' => $request->no_telp,
-            'password' => bcrypt($request->password), 
+            'password' => $password, 
             'username' => $request->username,
             'role' => $request->role
         ]);
 
-        return redirect()->route('guruTable')->with('success','data guru berhasil di tambah');
+        return redirect()->route('admin.guru.index')->with('success','data guru berhasil di tambah');
     }
 
     /**
@@ -111,7 +111,7 @@ class guruController extends Controller
             'role' => $request->role
         ]);
 
-        return redirect()->route('guruTable')->with('success','data berhasil di updata');
+        return redirect()->route('admin.guru.index')->with('success','data berhasil di updata');
     }
 
     /**
@@ -122,6 +122,6 @@ class guruController extends Controller
         $guru = Guru::findOrFail($id);
         $guru->delete();
 
-        return redirect()->route('guruTable')->with('success','data berhasil di hapus');
+        return redirect()->route('admin.guru.index')->with('success','data berhasil di hapus');
     }
 }

@@ -83,7 +83,7 @@
       @endif
 
       <div class="card-body">
-        <form class="needs-validation" action="{{ route('siswaStore') }}" method="POST" novalidate>
+        <form class="needs-validation" action="{{ route('admin.siswa.store') }}" method="POST" novalidate>
           @csrf
           <!-- Nama Lengkap -->
           <div class="row mb-3">
@@ -92,6 +92,16 @@
               <div class="input-group has-validation">
                 <span class="input-group-text"><i class="bx bx-user"></i></span>
                 <input type="text" class="form-control" id="name" name="nama_siswa" placeholder="Masukan nama lengkap..." required />
+                <div class="invalid-feedback">Nama lengkap harus diisi.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="name">username</label>
+            <div class="col-sm-10">
+              <div class="input-group has-validation">
+                <span class="input-group-text"><i class="bx bx-user"></i></span>
+                <input type="text" class="form-control" id="name" name="username" placeholder="Masukan nama lengkap..." required />
                 <div class="invalid-feedback">Nama lengkap harus diisi.</div>
               </div>
             </div>

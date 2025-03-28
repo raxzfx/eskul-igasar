@@ -96,7 +96,7 @@
             @endif
             
                 <div class="card-body">
-                    <form class="needs-validation" action="{{route('jurusanUpdate',$jurusan->id_jurusan)}}" method="POST" novalidate>
+                    <form class="needs-validation" action="{{route('admin.jurusan.update',$jurusan->id_jurusan)}}" method="POST" novalidate>
                         @csrf
                         @method('PUT')
                         <div class="row mb-3">

@@ -58,7 +58,7 @@ class PendaftaranController extends Controller
         // Simpan data ke tabel pivot menggunakan attach
         $pendaftaran->eskuls()->attach($request->eskul_id, ['status' => 'pending']);
 
-        return redirect()->route('pendaftaranTable')->with('success','data berhasil di tambah');
+        return redirect()->route('admin.pendaftaran.index')->with('success','data berhasil di tambah');
     }
 
     public function updateStatus(Request $request, $id, $eskulId)

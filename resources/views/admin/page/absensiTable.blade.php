@@ -49,21 +49,21 @@
   </div>
 <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
   <!-- Search -->
-<form method="GET" action="{{ route('jurusanTable') }}" class="navbar-nav align-items-center me-auto">
+<form method="GET" action="{{ route('admin.absensi.index') }}" class="navbar-nav align-items-center me-auto">
     <div class="nav-item d-flex align-items-center">
         <span class="w-px-22 h-px-22">
             <i class="icon-base bx bx-search icon-md"></i>
         </span>
         <input type="text" name="search" class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
-            placeholder="Cari jurusan..." aria-label="Search..."
+            placeholder="search..." aria-label="Search..."
             value="{{ request('search') }}" />
     </div>
 </form>
 
     <!-- /Search -->
   <ul class="navbar-nav flex-row align-items-center ms-md-auto">
-      <!-- User -->
-      <li class="nav-item navbar-dropdown dropdown-user dropdown">
+       <!-- User -->
+       <li class="nav-item navbar-dropdown dropdown-user dropdown">
         <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
           <div class="avatar avatar-online">
             <img src="{{asset ('assets/img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle" />
@@ -79,7 +79,7 @@
                   </div>
                 </div>
                 <div class="flex-grow-1">
-                  <h6 class="mb-0">John Doe</h6>
+                  <h6 class="mb-0">{{ Auth::guard('admin')->user()->username }}</h6> 
                   <small class="text-body-secondary">Admin</small>
                 </div>
               </div>
@@ -89,25 +89,12 @@
             <div class="dropdown-divider my-1"></div>
           </li>
           <li>
-            <a class="dropdown-item" href="#"> <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span> </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#"> <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span> </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">
-              <span class="d-flex align-items-center align-middle">
-                <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i><span class="flex-grow-1 align-middle">Billing Plan</span>
-                <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
-              </span>
-            </a>
-          </li>
-          <li>
-            <div class="dropdown-divider my-1"></div>
-          </li>
-          <li>
-            <a class="dropdown-item" href="javascript:void(0);"> <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span> </a>
-          </li>
+            <form action="{{ route('logout') }}" method="POST">
+              @csrf
+              <button type="submit" class="dropdown-item" style="border: none; background: none; cursor: pointer;">
+                  <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+              </button>
+          </form>            </li>
         </ul>
       </li>
       <!--/ User -->
@@ -118,8 +105,8 @@
 
     <!-- Hoverable Table rows -->
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h1 class="fw-bold">absensi</h1>
-        <form action="{{ route('absensiTable') }}" method="GET" class="d-flex gap-2 mb-3 " style="max-width: 130px;">
+        <h1 class="fw-bold">Absensi & Nilai</h1>
+        <form action="{{ route('admin.absensi.index') }}" method="GET" class="d-flex gap-2 mb-3 " style="max-width: 130px;">
           <input type="date" name="tanggal" class="form-control" value="{{ request('tanggal') }}">
           <button type="submit" class="btn btn-primary">Filter</button>
       </form>
@@ -128,7 +115,7 @@
         <div class="card mb-4">
             <h5 class="card-header d-flex justify-content-between align-items-center">
                 <span>Absensi - {{ $eskul->nama_eskul }}</span>
-                <a href="{{ route('absensiAdd', ['eskul_id' => $eskul->id_eskul]) }}" class="btn btn-primary">
+                <a href="{{ route('admin.absensi.create', ['eskul_id' => $eskul->id_eskul]) }}" class="btn btn-primary">
                   <span class="icon-base bx bx-plus-circle icon-sm me-2"></span> Tambah Data
               </a>
               
@@ -140,7 +127,9 @@
                             <th>No</th>
                             <th>Nama Murid</th>
                             <th>Tanggal</th>
-                            <th>Status</th>
+                            <th>keterangan</th>
+                            <th>Nilai</th>
+                            <th>catatan</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -155,6 +144,12 @@
                                         ($absen->status == 'izin' ? 'primary' : 'danger')) }}">
                                         {{ $absen->status }}
                                     </span>
+                                </td>
+                                <td>
+                                  {{$absen->nilai}}
+                                </td>
+                                <td>
+                                  {{$absen->catatan}}
                                 </td>
                             </tr>
                         @empty

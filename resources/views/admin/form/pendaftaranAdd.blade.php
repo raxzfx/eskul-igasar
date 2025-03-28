@@ -82,7 +82,7 @@
       @endif
 
       <div class="card-body">
-        <form class="needs-validation" action="{{route('pendaftaranStore')}}" method="POST" enctype="multipart/form-data" novalidate>
+        <form class="needs-validation" action="{{route('admin.pendaftaran.store')}}" method="POST" enctype="multipart/form-data" novalidate>
           @csrf
           
           <!-- Nama Eskul -->

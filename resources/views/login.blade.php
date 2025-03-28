@@ -108,33 +108,41 @@
             <h4 class="mb-1">Welcome to E-gapind</h4>
             <p class="mb-6">masukan no telpon dan password!</p>
 
-            <form id="formAuthentication" class="mb-6" action="index.html">
+            <form id="formAuthentication" class="mb-6" action="{{ route('login') }}" method="POST">
+              @csrf <!-- Tambahkan CSRF token untuk keamanan -->
+              
+              <!-- Tampilkan pesan error -->
+              @if ($errors->any())
+                  <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+              @endif
+          
               <div class="mb-6">
-                <label for="email" class="form-label">No telpon</label>
-                <input type="number" class="form-control" id="email" name="email-username" placeholder="masukan no telpon" autofocus />
+                  <label for="username" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" autofocus />
+                  @error('username')
+                      <div class="text-danger">{{ $message }}</div>
+                  @enderror
               </div>
               <div class="mb-6 form-password-toggle">
-                <label class="form-label" for="password">Password</label>
-                <div class="input-group input-group-merge">
-                  <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
-                  <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
-                </div>
-              </div>
-              <div class="mb-8">
-                <div class="d-flex justify-content-between">
-                  <div class="form-check mb-0">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
+                  <label class="form-label" for="password">Password</label>
+                  <div class="input-group input-group-merge">
+                      <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                      <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
                   </div>
-                  <a href="auth-forgot-password-basic.html">
-                    <span>Forgot Password?</span>
-                  </a>
-                </div>
+                  @error('password')
+                      <div class="text-danger">{{ $message }}</div>
+                  @enderror
               </div>
               <div class="mb-6">
-                <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
+                  <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
               </div>
-            </form>
+          </form>
 
             <p class="text-center">
               <span>belum memiliki akun?</span>
